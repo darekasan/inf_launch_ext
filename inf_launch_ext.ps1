@@ -4,8 +4,8 @@ $InfRegistry = "HKLM:\SOFTWARE\KONAMI\beatmania IIDX INFINITAS"
 # ゲーム本体のパス 通常はレジストリから取得
 #$InfPath = "C:\Games\beatmania IIDX INFINITAS"
 $InfPath = Get-ItemPropertyValue -LiteralPath $InfRegistry -Name "InstallDir"
-$InfExe = $InfPath + "\game\app\bm2dx.exe"
-$InfLauncher = $InfPath + "\launcher\modules\bm2dx_launcher.exe"
+$InfExe = Join-Path $InfPath "game\app\bm2dx.exe"
+$InfLauncher = Join-Path $InfPath "launcher\modules\bm2dx_launcher.exe"
 
 # bm2dxinf:// のレジストリ
 $InfOpen = "HKCR:bm2dxinf\shell\open\command\"
