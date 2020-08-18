@@ -19,12 +19,8 @@ INFINITASの起動ページからランチャーを起動せず、このスク�
 - 前回の設定の読み込み
 
 ## ASIO出力について
-たぶんARESPEAR用だと思うんですがINFINITASにはASIO出力が付いてるみたいです。<br>
-ASUS XONAR AEサウンドカードを使っているならASIOでのオーディオ出力ができます。<br>
-ASIOがオープンできなかった場合は「オーディオデバイス作成失敗」というエラーが出るので、**このスクリプトでASIOを選んで正常に起動して音が出ていればASIOで出力できているはず**です。<br>
-<br>
-他のオーディオインターフェイスでもレジストリのHKLM\SOFTWARE\ASIO\XONAR SOUND CARD(64)にASIOドライバーのCLSIDを入れるとオープンしてくれますが、データフォーマットが固定なのか雑音しか鳴りません。<br>
-2ch出力で44.1khzで24bit(ASIOSTInt24LSB)でレイテンシが8ms(352sample)に対応しているものならうまくいくかもしれません。
+ARESPEARに採用されていることでも知られるASUS Xonar AEならこのスクリプトでASIOを使うことができます。WASAPI排他モードを超える低遅延や安定性を期待できそうです。<br>
+それ以外でもある条件を満たせば使えます。詳しくは[ASIOについて](https://github.com/darekasan/inf_launch_ext/blob/master/asio.md)を参照。
 
 ## インストール
 #### 1 [inf_launch_ext.ps1](https://github.com/darekasan/inf_launch_ext/blob/master/inf_launch_ext.ps1)をダウンロード
