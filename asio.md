@@ -26,7 +26,7 @@ DTM用機材のASIOドライバーの多くは32bitのみ対応なので使え�
 |----|----|----|----|
 |Realtek HD Audio|？|？|設定にコツがいるみたい？|
 |Pioneer LX-89|公式|OK|AVアンプ ASIOコンパネでビット深度24bit指定 [@db_chinpei](https://twitter.com/db_chinpei/status/1295021180718444544/)氏|
-|エレコム EHP-AHR192|BRAVO-HD|OK|SA9123チップ microUSB(OTG)接続 [CSスレpart679 >>353](https://medaka.5ch.net/test/read.cgi/otoge/1596990646/353)|
+|エレコム EHP-AHR192|[DS-200 ソフトウェア・パッケージ](https://www.soundfort.jp/download/)|OK|バッファサイズ3msで安定動作 SA9123チップ microUSB(OTG)接続 [CSスレpart679 >>353](https://medaka.5ch.net/test/read.cgi/otoge/1596990646/353)|
 |SoundBlaster X-Fi XtremeGamer|公式|？|PCI接続|
 |NI Komplete Audio 6無印|公式|NG||
 |Roland DUO-CAPTURE|公式|NG||
