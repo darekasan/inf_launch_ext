@@ -60,3 +60,11 @@ Xonar AE以外のサウンドカードでも、レジストリを書き換えて
 |Roland UA-101|公式|NG|[@db_chinpei](https://twitter.com/db_chinpei/status/1295021180718444544/)氏|
 |Roland JD-Xi|公式|？|USBオーディオ付きのシンセ|
 |Griffin iMic|[非公式](https://www.usb-audio.com/download/)|NG||
+
+
+## 遅延について
+いくつかのサウンドカードでASIO/排他/共有の3つのモードで遅延を検証したそうです。環境構築の参考にしてみては？<br>
+特にXonar AEの結果は興味深いです。
+
+[https://twitter.com/db_chinpei/status/1297600581758926848](https://twitter.com/db_chinpei/status/1297600581758926848)<br>
+[https://twitter.com/db_chinpei/status/1304114822133420033](https://twitter.com/db_chinpei/status/1304114822133420033)
