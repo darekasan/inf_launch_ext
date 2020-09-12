@@ -104,6 +104,14 @@ function Start-Exe($exe, $workDir, $arg){
     return $p
 }
 
+function Switch-Borderless($isBl){
+    if ($isBl) {
+        [Win32Api]::SetWindowLong($handle, -16, $WSBorderless) | Out-Null
+    }else{
+        [Win32Api]::SetWindowLong($handle, -16, $WSDefault) | Out-Null
+    }
+}
+
 
 # 引数を指定しなかったときにレジストリ変更
 if ([string]::IsNullOrEmpty($Args[0])) {
@@ -214,7 +222,9 @@ if($InfArgs.Contains("-w")){
     $handle = $p.MainWindowHandle
 
     # 前回の位置と大きさにする
-    [Win32Api]::MoveWindow2($handle, $Config["WindowPositionX"], $Config["WindowPositionY"], $Config["WindowWidth"], $Config["WindowHeight"], $false)
+    Switch-Borderless($Config["Borderless"])
+    [Win32Api]::MoveWindow2($handle, $Config["WindowPositionX"], $Config["WindowPositionY"], $Config["WindowWidth"], $Config["WindowHeight"], $Config["Borderless"])
+
     echo ""
     echo "window mode setting"
     echo "example:"
@@ -237,14 +247,10 @@ if($InfArgs.Contains("-w")){
         }
 
         # ボーダーレス化
-        if ($Config["Borderless"]) {
-            [Win32Api]::SetWindowLong($handle, -16, $WSDefault) | Out-Null
-        }else{
-            [Win32Api]::SetWindowLong($handle, -16, $WSBorderless) | Out-Null
-        }
+        Switch-Borderless($Config["Borderless"])
 
         # 位置とサイズを反映
-        [Win32Api]::MoveWindow2($handle, $Config["WindowPositionX"], $Config["WindowPositionY"], $Config["WindowWidth"], $Config["WindowHeight"], $IsBorderless)
+        [Win32Api]::MoveWindow2($handle, $Config["WindowPositionX"], $Config["WindowPositionY"], $Config["WindowWidth"], $Config["WindowHeight"], $Config["Borderless"])
 
         # 設定ファイルに書き込む
         Save-Config
