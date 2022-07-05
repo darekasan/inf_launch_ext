@@ -1,6 +1,9 @@
 # inf_launch_ext
 INFINITASの起動オプションをいじる
 
+For USTA(Korean) Version: 
+[Coldlapse/inf_launch_ext_kr](https://github.com/Coldlapse/inf_launch_ext_kr)
+
 ## 注意
 このスクリプトを使用することによって生じる問題等の責任を一切負いません<br>
 このスクリプトを作成するにあたってゲーム本体の改造やリバースエンジニアリング等の利用規約違反となる行為は行っていませんが、なにがあるかわからないので自己責任にて使用してください。<br>
