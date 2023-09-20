@@ -4,6 +4,17 @@ INFINITASの起動オプションをいじる
 For USTA(Korean) Version: 
 [Coldlapse/inf_launch_ext_kr](https://github.com/Coldlapse/inf_launch_ext_kr)
 
+## 2023/09/21追記
+
+IIDXから離れてて最近の動向追えてないしメンテナンスもしてないので、もっと良いソリューションがあるかもです。
+
+素晴らしい機能拡張版フォークたち
+
+- [kinetic-flow/infzoom](https://github.com/kinetic-flow/infzoom)
+  - プレー画面を拡大できる！
+  - [chinimuruhi/infzoom-for-special-k](https://github.com/chinimuruhi/infzoom-for-special-k/)
+    - 外部ツール使用でウィンドウ/ボーダーレスでも120FPS出るみたいです
+
 ## 注意
 このスクリプトを使用することによって生じる問題等の責任を一切負いません<br>
 このスクリプトを作成するにあたってゲーム本体の改造やリバースエンジニアリング等の利用規約違反となる行為は行っていませんが、なにがあるかわからないので自己責任にて使用してください。<br>
@@ -99,3 +110,5 @@ Press enter key to switch to Borderless window.
 補間処理を入れようと思うと間に挟まってレンダリング結果横取りして別のウィンドウに表示するくらいしか方法が無いので、気になる方は~~DxWndとかで窓化したほうがいいです。~~ DxWndは64bitバイナリ非対応なので新INFINITASじゃ使えないんですね
 - 導入がむずい<br>
 「何をやってるのか全然わからん」って人は手を出さないほうが無難？
+- 120FPS出ない
+  - 外部ツール要る模様
