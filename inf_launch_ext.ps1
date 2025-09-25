@@ -17,6 +17,13 @@ $ScriptPath = $MyInvocation.MyCommand.Path
 # 設定ファイル
 $ConfigJson = Join-Path $PSScriptRoot "config.json"
 
+# InfProxy用argsファイル
+$InfProxyArgs = Join-Path $InfPath "args.txt"
+
+# InfProxy.exeのパス
+$InfProxyPath = Join-Path $InfPath "InfProxy.exe"
+$InfProxySrcPath = Join-Path $InfPath "InfProxy.cs"
+
 $Config = @{
     "Option"="0"
     "WindowWidth"="1280"
@@ -24,6 +31,7 @@ $Config = @{
     "WindowPositionX"="0"
     "WindowPositionY"="0"
     "Borderless"=$false
+    "SteamUrl"="steam://rungameid/"
 }
 
 # ウィンドウスタイル（調べてもよくわかんなかった）
@@ -85,6 +93,32 @@ Add-Type @"
     }
 "@
 
+
+$InfProxySrc = @"
+using System;
+using System.Diagnostics;
+using System.IO;
+using Microsoft.Win32;
+
+namespace InfProxy
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            var installDir = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\KONAMI\beatmania IIDX INFINITAS", "InstallDir", "").ToString();
+            var myArgs = File.ReadAllText(installDir + "args.txt");
+
+            var psi = new ProcessStartInfo();
+            psi.Arguments = string.Format(@"-file ""{0}inf_launch_ext.ps1"" {1}", installDir, myArgs);
+            psi.WorkingDirectory = installDir;
+            psi.FileName = string.Format("PowerShell.exe");
+            Process.Start(psi);
+        }
+    }
+}
+"@
+
 function Save-Config() {
     $Config | ConvertTo-Json | Out-File -FilePath $ConfigJson -Encoding utf8
 }
@@ -125,8 +159,7 @@ if ([string]::IsNullOrEmpty($Args[0])) {
     echo ""
     
     echo "0 : revert to default"
-    echo "1 : set to this script path"
-    echo "3 : copy script file to game directory and set to new script path (recommended)"
+    echo "1 : copy script file to game directory and set to new script path"
     $num = Read-Host "number->"
 
     switch ($num) {
@@ -134,9 +167,6 @@ if ([string]::IsNullOrEmpty($Args[0])) {
             $val = """${InfLauncher}"" ""%1"""
         }
         1 {
-            $val = """powershell"" ""-file"" ""${ScriptPath}"" ""%1"""
-        }
-        3 {
             $NewScriptPath = Join-Path $InfPath "inf_launch_ext.ps1"
             Copy-Item $ScriptPath $NewScriptPath
             $val = """powershell"" ""-file"" ""${NewScriptPath}"" ""%1"""
@@ -177,6 +207,7 @@ echo "1 : Normal"
 echo "2 : Normal + window mode"
 echo "3 : ASIO"
 echo "4 : ASIO + window mode"
+echo "5 : Run from Steam"
 
 $num = Read-Host "number(last time: $($Config["Option"]))"
 if([string]::IsNullOrEmpty($num)){
@@ -200,6 +231,26 @@ switch ($num) {
     4 {
         $InfArgs += " -w"
         $InfArgs += " --asio"
+    }
+    5 {
+        # InfProxy.exeが存在しない場合ビルドする
+        if(!(Test-Path $InfProxyPath)){
+            echo "InfProxy.exe is not found."
+            echo "Now building InfProxy.exe..."
+            $InfProxySrc | Out-File -FilePath $InfProxySrcPath
+            C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe .\InfProxy.cs | Out-Null
+            echo ""
+            echo "This is a path for InfProxy."
+            echo $InfProxyPath
+            echo "Add InfProxy as a non-Steam game in your Steam client."
+            echo "Then create a shortcut for InfProxy on your desktop and get the URL."
+            echo ""
+            $Config["SteamUrl"] = Read-Host "Steam app URL(optional)"
+            Save-Config
+        }
+        $Args[0] | Out-File -FilePath $InfProxyArgs
+        rundll32.exe url.dll,FileProtocolHandler $Config["SteamUrl"]
+        exit
     }
     Default {
         exit
